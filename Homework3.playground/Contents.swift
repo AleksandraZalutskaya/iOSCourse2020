@@ -33,12 +33,12 @@ let mammals = Mammals()
 print(mammals.description)
 
 class Primates: Mammals {
-    var species = "477 видов"
+    static var numberOfSpecies = 477 //его нельзя добавлять в description через \()
     var wool = "имеют шерсть"
     var theyLive = "обитают на деревьях"
     
     override var description: String {
-        return super.description + "На Планете Земеля существует примерно \(species) приматов. В основном приматы \(wool) и \(theyLive).\n"
+        return super.description + "В основном приматы \(wool) и \(theyLive).\n"
     }
     
     override func makeMoves() {
@@ -78,6 +78,8 @@ let lemurs = Lemurs()
 print(lemurs.description)
 
 class Gibbons: Primates {
+    static var weigtMax: Int = 15 //так мы храним данные, которые можем потом через if чекнуть верно или нет, и если верно, то тогда инициализирует его
+    
     var size = "от 4кг до 13кг"
     var home = "тропические леса Юго-Восточной Азии"
     var lifecycle = "25 - 30 лет"
@@ -87,7 +89,7 @@ class Gibbons: Primates {
     }
     override func hang(tail: String) -> String {
         "не может висеть, нет хвоста"
-    } //как можно удалить функцию?
+    } //функцию внутри класса удалить нельзя, только переопределить
 }
 
 let gibbons = Gibbons()

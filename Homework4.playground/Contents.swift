@@ -10,7 +10,6 @@ func arguments1 (arg1: Int, arg2: Int) {
         "Не больше"
     }
 }
-
 arguments1(arg1: 5, arg2: 4)
 
 
@@ -29,15 +28,19 @@ arguments2(arg3: 5, arg4: 3, arg5: 10)
 
 // 3. Функция получает опциональный Int аргумент, затем проверяет ее на nil: если есть значение - выводит его в консоль, если нет - выводит фразу "no value"
 
-func optionArg (arg6: Int) -> Int {
-  return arg6
-}
-
-var result2 = optionArg(arg6: 9)
-
 var number1: Int? = 23
 var optionResult1 = number1 ?? 1
 
 let number2: Int? = nil
 let optionResult2 = number2 ?? 1
+
+
+func optionArg2 (arg7: Int?) {
+    if let arg7 = arg7 {
+        arg7
+    } else {
+        "no value"
+    }
+}
+optionArg2(arg7: nil)
 

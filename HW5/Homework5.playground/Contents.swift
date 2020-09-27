@@ -2,7 +2,7 @@ import UIKit
 
 //: ### Практика:
 // 1. Придумать ENUM к которому можно применить rawValue (не Error), другой к которому можно применить Associated Values (не из примеров с занятия)
-//RawValue
+//RAW VALUE
 enum Currency: Int {
     case rub = 810
     case usd = 840
@@ -10,99 +10,127 @@ enum Currency: Int {
 }
 Currency (rawValue: 978)
 
-//AssociatedValue
+//ASSOCIATED VALUE
 
 typealias Petrol = Double
-typealias Energy = Double
-typealias Gas = Double
 typealias Diesel = Double
+typealias Propan = Int
+typealias Electricity = Int
 
 enum Cars {
-    case PetrolCar (Petrol)
-    case ElectricCar (Energy)
-    case DieselCar (Diesel)
-    case GasCar (Gas)
-    case HybridCar (Petrol, Energy)
+    case petrolCar (Petrol)
+    case dieselCar (Diesel)
+    case gasCar (Propan)
+    case electricCar (Electricity)
+    case hybridCar (Petrol, Electricity)
 }
 
-let wednesdayPetrolAmount = Cars.PetrolCar(30)
-let wednesdayHybridAmount = Cars.HybridCar(35, 12)
+let wednesdayPetrol = Cars.petrolCar(30.8)
+let wednesdayDiesel = Cars.dieselCar(13.2)
+let wednesdayElectric = Cars.electricCar(24)
+let wednesdayGas = Cars.gasCar(0)
+let wednesdayHybrid = Cars.hybridCar(11.8, 2)
 
+func currentVolume (cars: Cars) {
+    switch cars {
+    case .petrolCar(let liter1):
+        print ("petrol car has \(liter1) liters now.")
+    case .dieselCar(let liter2):
+        print("diesel car has \(liter2) liters now.")
+    case .gasCar (let liter3):
+        print("Gas car has \(liter3) liters now.")
+    case .electricCar(let WattPerHour):
+        print("Electric car has \(WattPerHour) W/H now.")
+    case let .hybridCar(hLiter, hWattPerHour):
+        print("Hybrid Car has \(hLiter) liters and \(hWattPerHour) W/H now.")
+    }
+}
+
+currentVolume(cars: wednesdayHybrid)
+currentVolume(cars: wednesdayGas)
 
 // 2. Создать опционалы типов Int, Double, String + какого-то своего класса, а также применить все виды разворачивания: Optional Binding, Optional chaining, nil-coalesing (??)
 
+let sister: Int? = Optional.some(2)
+let brother: Int? = Optional.none
+
 //Optional Binding
-//if let
-let name: String?
-name = "Mickey"
-
-if let nameOfParticipant1 = name {
-    print("\(nameOfParticipant1) has been regestred to the Marathon.")
-}
-
 //Guard
-func distanceOfParticipant (distance: Int?) {
-    guard let distance = distance else {
-        print ("Participant hasn't passed the first stop.")
+func participant1 (name: String?){
+    guard let name = name else {
+        print("Have not appeared.")
         return
     }
-    print("Participant has just passed the point of \(distance) km.")
+    print("Participant \(name) is registered.")
 }
+participant1(name: "Mickey")
 
-distanceOfParticipant(distance: 10)
+//If let
+let firstStop: Double? = 5.5
+    if let distance = firstStop {
+        print("Mickey has just passed the first point of \(distance) km.")
+    }
 
-//nil-coalesing
-let finishLine1: Int? = 42
-var firstParticipant = finishLine1 ?? 0
+//Nil-Coalesing
+
+let secondStop: Int? = 10
+let participant1 = secondStop ?? 5
 
 //Optional Chaining
-struct MarathonResults {
+typealias kilometersPerMinute = Double
+struct Marathon {
     var name: String
     var distance: Double?
-    var speed: Double?
+    var speed: kilometersPerMinute?
+}
+let runner1 = "Mickey"
+let runner2 = "Nick"
+
+let firstParticipant: Marathon?
+firstParticipant = Marathon(name: "Mickey", distance: 42, speed: 7.1)
+let distanceOfMickey = firstParticipant?.distance
+
+if distanceOfMickey == 42 {
+    print("\(runner1) has finished the Marathon.")
+} else {
+    print("\(runner1) hasn't appeared at the Marathon.")
 }
 
-var Participant1: MarathonResults?
-Participant1 = MarathonResults (name: "Mickey", distance: 42, speed: 7.3)
-let distance1 = Participant1?.distance
+let secondParticipant: Marathon?
+secondParticipant = Marathon(name: "Nick", distance: nil, speed: nil)
 
-if let distance1 = distance1 {
-    print ("Mickey has ran \(distance1) km at the Marathon.")
+let distanceOfNick = secondParticipant?.distance
+
+if distanceOfNick == 42 {
+    print("\(runner2) has finished the Marathon.")
 } else {
-    print("PMickey hasn't appeared at the Marathon")
-}
-
-var Participant2: MarathonResults?
-Participant2 = MarathonResults (name: "Nick", distance: nil, speed: nil)
-let distance2 = Participant2?.distance
-
-if let distance2 = distance2 {
-    print ("Nick has ran \(distance2) km at the Marathon.")
-} else {
-    print("Nick hasn't appeared at the Marathon")
+    print("\(runner2) hasn't appeared at the Marathon.")
 }
 
 // 3. Описать с помощью ENUM погодные явления, сопроводить(где возможно) associated values
 
 enum WeatherConditions {
-    case temperature (celsius: Int)
-    case wind
+    case temperature (celcius: Double)
+    case cloudiness
     case fallout (typeOfFallout: String)
-    case cloudeness
+    case wind
 }
 
-func whatToWear (if weather: WeatherConditions) {
-    switch weather {
-    case .temperature(let celsius) where celsius <= 10:
+func whatToWear (if goForWalk: WeatherConditions) {
+    switch goForWalk {
+    case .temperature(let celcius) where celcius <= 10:
         print("It's cold outside. Put on warm clothes.")
-    case .fallout(let typeOfFallout) where typeOfFallout.lowercased() == "rainy":
-        print("It's better to bring an umbrella and a scarf.")
-    case .wind, .cloudeness:
-        print("It's better to bring an umbrella and a scarf.")
+    case .cloudiness:
+        print("You'd better bring an umbrella and wear a scarf.")
+    case .fallout(let typeOfFallout) where typeOfFallout.lowercased() == "rainy" || typeOfFallout.lowercased() == "storm":
+        print("You'd better bring an umbrella and wear a scarf.")
+    case .wind:
+        print("It's windy outside. Put on warm clothes.")
     case .temperature, .fallout:
         print("It's sunny and warm outside. Put on a dress.")
     }
 }
-whatToWear(if: .temperature(celsius: 21))
+
+whatToWear(if: .temperature(celcius: 17.5))
+whatToWear(if: .cloudiness)
 whatToWear(if: .fallout(typeOfFallout: "Rainy"))
-whatToWear(if: .fallout(typeOfFallout: "No fallout"))

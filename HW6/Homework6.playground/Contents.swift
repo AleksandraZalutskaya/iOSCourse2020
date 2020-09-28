@@ -39,7 +39,19 @@ print(arrayMuatable)
 
 // 3. Написать 1 алгоритм сортировки элементов массива [Int]
 
-let numberArray2 = [100,20,32,1,3,20_209]
-let sortedArray = numberArray2.sorted(by: >)
+var numberArray2 = [100,20,32,1,3,20_209]
+
+for index in 0..<numberArray2.count {
+    var minNumber = index
+    var number2 = index + 1
+    while number2 < numberArray2.count {
+        if numberArray2 [minNumber] > numberArray2 [number2] {
+            minNumber = number2
+        }
+        number2 += 1
+    }
+    if index != minNumber {
+        numberArray2.swapAt(index, minNumber)
+    }
+}
 print(numberArray2)
-print(sortedArray)

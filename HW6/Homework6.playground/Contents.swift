@@ -1,0 +1,57 @@
+import UIKit
+
+// 1. Описать функцию принимающую 2 аргумента String (word, line), которая с помощью цикла FOR считает сколько раз данное слово встречается в строке line
+
+func twoArg (word: String?, line: String?) {
+    var count = 0
+    if let word = word, let line = line {
+        let words = line.split(separator: " ")
+        for amountOfWords in words {
+            if amountOfWords == word{
+                count += 1
+            }
+        }
+        print (count)
+    } else {
+        print("Ошибка.")
+    }
+}
+  
+print (twoArg(word: "лето", line: "зима осень лето весна лето"))
+print(twoArg(word: "лавировали", line: "Корабли лавировали лавировали не выловировали.")) //как добавить несколько разделителей, чтобы считало и запятые, и пробелы
+
+// 2. Написать алгоритм с помощью цикла DO-WHILE который добавляет в массив [Int] элементы (можно одинаковые, можно рандомные) до тех пор, пока сумма элементов массива меньше 100
+
+var arrayMuatable: Array <Int> = []
+var randomNumber = 0
+let randomInt = Int.random(in: 0...100)
+
+repeat {
+    arrayMuatable.append(randomInt)
+    for newNumber in arrayMuatable {
+       randomNumber += newNumber
+    }
+}
+while randomNumber < 100
+
+arrayMuatable.reduce(0, +) //больше 100, так как сначала добавляет, а потом проверяет?
+print(arrayMuatable)
+
+// 3. Написать 1 алгоритм сортировки элементов массива [Int]
+
+var numberArray2 = [100,20,32,1,3,20_209]
+
+for index in 0..<numberArray2.count {
+    var minNumber = index
+    var number2 = index + 1
+    while number2 < numberArray2.count {
+        if numberArray2 [minNumber] > numberArray2 [number2] {
+            minNumber = number2
+        }
+        number2 += 1
+    }
+    if index != minNumber {
+        numberArray2.swapAt(index, minNumber)
+    }
+}
+print(numberArray2)
